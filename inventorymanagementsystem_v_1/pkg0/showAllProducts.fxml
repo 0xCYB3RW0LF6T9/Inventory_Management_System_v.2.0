@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="415.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inventorymanagementsystem_v_1.pkg0.ShowAllProductsController">
@@ -14,6 +15,9 @@
             <TableColumn fx:id="quantityCol" prefWidth="99.20001220703125" text="QUANTITY" />
         </columns>
       </TableView>
-      <Button layoutX="100.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteOnAction" text="Delete" />
+      <Button layoutX="426.0" layoutY="315.0" mnemonicParsing="false" onAction="#deleteOnAction" text="Delete" />
+      <TextField fx:id="valueField" layoutX="426.0" layoutY="53.0" promptText="Enter Amount" />
+      <Button layoutX="457.0" layoutY="89.0" mnemonicParsing="false" onAction="#addQuantityOnAction" text="Add Quantity" />
+      <Button layoutX="447.0" layoutY="130.0" mnemonicParsing="false" onAction="#removeQuantityOnAction" text="Remove Quantity" />
    </children>
 </AnchorPane>
