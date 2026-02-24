@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -33,85 +34,149 @@ public class ShowAllProductsController implements Initializable {
     private TableColumn<product, String> idCOl;
     @FXML
     private TableColumn<product, Integer> quantityCol;
+    @FXML
+    private TextField valueField;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         nameCol.setCellValueFactory(new PropertyValueFactory<product, String>("name"));
         idCOl.setCellValueFactory(new PropertyValueFactory<product, String>("id"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<product, Integer>("quantity"));
         tableView.setItems(AddProductController.productList);
-       
-         File file = new File("Products.txt");
 
-try {
+        File file = new File("Products.txt");
 
-    if (!file.exists()) {
-        file.createNewFile();
-    }
+        try {
 
-    // IMPORTANT: clear list to avoid duplicates
-    AddProductController.productList.clear();
+            if (!file.exists()) {
+                file.createNewFile();
+            }
 
-    Scanner sc = new Scanner(file);   
+            // IMPORTANT: clear list to avoid duplicates
+            AddProductController.productList.clear();
 
-    while (sc.hasNextLine()) {
-        String str = sc.nextLine();
+            Scanner sc = new Scanner(file);
 
-        if (str.trim().isEmpty()) continue;
+            while (sc.hasNextLine()) {
+                String str = sc.nextLine();
 
-        String parts[] = str.split("#");
+                if (str.trim().isEmpty()) {
+                    continue;
+                }
 
-        if (parts.length == 3) {
-            product pd = new product(
-                    parts[0],
-                    parts[1],
-                    Integer.parseInt(parts[2])
-            );
+                String parts[] = str.split("#");
 
-            AddProductController.productList.add(pd);
+                if (parts.length == 3) {
+                    product pd = new product(
+                            parts[0],
+                            parts[1],
+                            Integer.parseInt(parts[2])
+                    );
+
+                    AddProductController.productList.add(pd);
+                }
+            }
+
+            sc.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
 
-    sc.close();
-
-} catch (Exception e) {
-    e.printStackTrace();
-}
-          
-          
-          
-            
-            
-        
-        
-        
-        
-        
 // TODO
     }
 
     @FXML
     private void deleteOnAction(ActionEvent event) throws IOException {
-        
-        product pd=tableView.getSelectionModel().getSelectedItem();
+
+        product pd = tableView.getSelectionModel().getSelectedItem();
         AddProductController.productList.remove(pd);
         File file = new File("Products.txt");
-        FileWriter fw= new FileWriter(file);
-        String str="";
-        for(product s:AddProductController.productList)
-        {
-            str+=s.getName()+"#"+s.getId()+"#"+s.getQuantity()+"\n";
-            
+        FileWriter fw = new FileWriter(file);
+        String str = "";
+        for (product s : AddProductController.productList) {
+            str += s.getName() + "#" + s.getId() + "#" + s.getQuantity() + "\n";
+
         }
         fw.write(str);
         fw.close();
-        
-        
+
     }
+
+    @FXML
+private void addQuantityOnAction(ActionEvent event) {
+
+    product pd = tableView.getSelectionModel().getSelectedItem();
+
+    if (pd == null) {
+        return;
+    }
+
+    try {
+        int val = Integer.parseInt(valueField.getText());
+
+        pd.setQuantity(pd.getQuantity() + val);   
+
+        tableView.refresh(); 
+
+        saveToFile();         
+
+        valueField.clear();
+
+    } catch (NumberFormatException e) {
+        System.out.println("Invalid number");
+    }
+}
+private void saveToFile() {
+
+    try {
+        File file = new File("Products.txt");
+        FileWriter fw = new FileWriter(file);
+
+        for (product s : AddProductController.productList) {
+            fw.write(s.getName() + "#" + s.getId() + "#" + s.getQuantity() + "\n");
+        }
+
+        fw.close();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    @FXML
+    private void removeQuantityOnAction(ActionEvent event) {
+        
+        product pd = tableView.getSelectionModel().getSelectedItem();
+
+    if (pd == null) {
+        return;
+    }
+
+    try {
+        int val = Integer.parseInt(valueField.getText());
+
+        pd.setQuantity(pd.getQuantity() - val);   
+
+        tableView.refresh();  
+
+        saveToFile();        
+
+        valueField.clear();
+
+    } catch (NumberFormatException e) {
+        System.out.println("Invalid number");
+    }
+}
+        
+        
+        
+        
+    
 
 }
