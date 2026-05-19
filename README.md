@@ -101,9 +101,9 @@ Inventory_Management_System_v.2.0/
 | Technology | Purpose |
 |---|---|
 | Java / Java Swing | Desktop Application UI |
-| MySQL | Database Management |
-| JDBC | Database Connectivity |
-| NetBeans / IntelliJ IDEA | Development Environment |
+| Local Machine | Database Management |
+| X_X | Database Connectivity |
+| NetBeans  | Development Environment |
 | Git & GitHub | Version Control |
 
 ---
@@ -112,7 +112,6 @@ Inventory_Management_System_v.2.0/
 
 ## Software Requirements
 - Java JDK 8+
-- MySQL Server
 - NetBeans / IntelliJ IDEA
 - Git
 
@@ -141,16 +140,9 @@ cd Inventory_Management_System_v.2.0
 
 ---
 
-## 3️⃣ Configure Database
 
-- Create a MySQL database
-- Import the provided SQL file (if available)
-- Update database credentials in configuration files
-
-Example configuration:
 
 ```java
-String url = "jdbc:mysql://localhost:3306/inventory_management";
 String username = "root";
 String password = "your_password";
 ```
@@ -179,11 +171,10 @@ Compile and execute the main application file.
 | Dashboard | System overview and analytics |
 | Product Module | Product management |
 | Inventory Module | Stock management |
-| Sales Module | Billing and sales tracking |
 | Purchase Module | Purchase management |
 | Supplier Module | Supplier management |
 | User Module | Authentication and access control |
-| Reports Module | Reports and analytics |
+
 
 ---
 
@@ -196,10 +187,7 @@ The system may include the following database entities:
 - Categories
 - Suppliers
 - Customers
-- Sales
 - Purchases
-- Inventory Logs
-- Transactions
 
 ---
 
